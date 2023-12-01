@@ -13,6 +13,7 @@ class _GameState extends State<Game> {
   var _clickCount = 0;
   var _displayScoreBtn = false;
   int _record = 0;
+  var _prenom = "";
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class _GameState extends State<Game> {
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Voici ton score : $_clickCount'),
               if (_displayScoreBtn)
@@ -31,9 +33,20 @@ class _GameState extends State<Game> {
                     icon: Icon(Icons.plus_one_sharp),
                     //color: Color(Colors.limeAccent),
                     label: Text(' Go Go Go !')),
-              Spacer(),
+              //Spacer(),
               if (_record > 0) Text("Voici le record absolu : $_record"),
-              Spacer(),
+              // Spacer(),
+              Text("Ton prénom : $_prenom"),
+              TextField(
+                autocorrect: false, //pas besoin pour le prénom
+                textCapitalization: TextCapitalization
+                    .words, //utile pour avoir un prénom avec une majuscule //désactiver la majuscule pour le mail
+                autofillHints: [AutofillHints.givenName],
+                keyboardType: TextInputType
+                    .name, //assiste l'utilisateur, son tel lui proposera un prénom de contact
+                //onChanged: _modifiedName, //en temps réel !
+                onSubmitted: _modifiedName,
+              ),
               if (!_displayScoreBtn)
                 FloatingActionButton.extended(
                     onPressed: _toggleScoreBtn,
@@ -41,6 +54,12 @@ class _GameState extends State<Game> {
             ],
           ),
         ));
+  }
+
+  _modifiedName(value) {
+    setState(() {
+      _prenom = value;
+    });
   }
 
   _toggleScoreBtn() {
