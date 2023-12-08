@@ -18,10 +18,15 @@ class _GameState extends State<Game> {
   var _recordman = "";
   var _prenom = "";
   var _formKey = GlobalKey<FormState>();
+  var _firstNameController =
+      TextEditingController(); //choisir de modifier le champ Text à n'importe quel moment
+  //Accéder au champ text en dehors de la fonction Bean
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset:
+            false, //pour éviter que le clavier gène le bas de l'écran
         appBar: AppBar(
           title: Text("Game Clicker"),
         ),
@@ -52,6 +57,8 @@ class _GameState extends State<Game> {
                           Icon(Icons.person_2_rounded),
                           Expanded(
                             child: TextFormField(
+                              // controller: _firstNameController, //soit controller soit initialvalue
+                              // initialValue: "Ted Lasso",
                               decoration: InputDecoration(
                                   helperText: "Entrez votre prénom",
                                   hintText: "Prénom"),
@@ -119,5 +126,11 @@ class _GameState extends State<Game> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
     }
+  }
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    super.dispose();
   }
 }
