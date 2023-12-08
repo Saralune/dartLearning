@@ -10,6 +10,11 @@ class ListLearning extends StatefulWidget {
 class _ListLearningState extends State<ListLearning> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("APPRENDS LES LISTES"),
+      ),
+      body: ListView(),
+    );
   }
 }
