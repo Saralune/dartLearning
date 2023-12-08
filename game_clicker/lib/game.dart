@@ -4,6 +4,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'model/player.dart';
+
 class Game extends StatefulWidget {
   const Game({super.key});
 
@@ -16,11 +18,11 @@ class _GameState extends State<Game> {
   var _displayScoreBtn = false;
   int _record = 0;
   var _recordman = "";
-  var _prenom = "";
+  var _firstName = "";
   var _formKey = GlobalKey<FormState>();
-  var _firstNameController =
-      TextEditingController(); //choisir de modifier le champ Text à n'importe quel moment
-  //Accéder au champ text en dehors de la fonction Bean
+  //choisir de modifier le champ Text à n'importe quel moment & accéder au champ text en dehors de la fonction Bean
+  var _firstNameController = TextEditingController();
+  final List<Player> _resultLists = [];
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class _GameState extends State<Game> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (!_displayScoreBtn) Text("Ton prénom : $_prenom"),
+                  if (!_displayScoreBtn) Text("Ton prénom : $_firstName"),
                   if (!_displayScoreBtn)
                     Form(
                       key: _formKey,
@@ -83,7 +85,7 @@ class _GameState extends State<Game> {
                     ),
                 ],
               ),
-              if (!_displayScoreBtn && _prenom != "")
+              if (!_displayScoreBtn && _firstName != "")
                 FloatingActionButton.extended(
                     onPressed: _toggleScoreBtn,
                     label: Text("Commencer à scorer !")),
@@ -94,7 +96,7 @@ class _GameState extends State<Game> {
 
   _saveFirstName(value) {
     setState(() {
-      _prenom = value;
+      _firstName = value;
     });
   }
 
@@ -109,9 +111,12 @@ class _GameState extends State<Game> {
   _stopGame() {
     setState(() {
       _displayScoreBtn = !_displayScoreBtn;
+      final result = Player(_firstName, _clickCount);
+      _resultLists.add(result);
+
       if (_clickCount > _record) {
         _record = _clickCount;
-        _recordman = _prenom;
+        _recordman = _firstName;
       }
     });
   }
