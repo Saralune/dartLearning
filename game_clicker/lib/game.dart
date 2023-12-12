@@ -24,6 +24,18 @@ class _GameState extends State<Game> {
   var _firstNameController = TextEditingController();
   final List<Player> _resultLists = [];
 
+  Widget _makeRowForResult(BuildContext context, int rowNumber) {
+    final result = _resultLists[rowNumber];
+    return Row(
+      children: [
+        Text(result.name),
+        Icon(Icons.military_tech),
+        Text("${result.score} points.")
+      ],
+    );
+    //Text("Le joueur ${_resultLists[rowNumber].name} a scoré : ${_resultLists[rowNumber].score}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,8 +57,13 @@ class _GameState extends State<Game> {
                     //color: Color(Colors.limeAccent),
                     label: Text(' Go Go Go !')),
               if (_record > 0)
-                Text(
-                    "Voici le record absolu : $_record - réalisé par $_recordman"),
+                //Text("Voici le record absolu : $_record - réalisé par $_recordman"),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _resultLists.length,
+                    itemBuilder: _makeRowForResult,
+                  ),
+                ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -112,6 +129,20 @@ class _GameState extends State<Game> {
     setState(() {
       _displayScoreBtn = !_displayScoreBtn;
       final result = Player(_firstName, _clickCount);
+
+      /*if (_resultLists.length > 0) {
+        if (_resultLists.length < 8) {
+          _resultLists.add(result);
+        } else {
+          if (_resultLists[_resultLists.length].score < _clickCount) {
+            _resultLists.removeLast();
+            _resultLists.add(result);
+          }
+        }
+      } else {
+        _resultLists.add(result);
+      }*/
+
       _resultLists.add(result);
 
       if (_clickCount > _record) {
