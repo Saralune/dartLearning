@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lists_project/ui/components/image_and_text.dart';
 
 class ListLearning extends StatefulWidget {
   const ListLearning({super.key});
@@ -19,7 +20,8 @@ class _ListLearningState extends State<ListLearning> {
   ];
 
   Widget _lineGenerator(BuildContext context, int lineNumber) {
-    return Image.network(_listImagesUrl[lineNumber]);
+    final urlImage = _listImagesUrl[lineNumber];
+    return ImageAndText(image: urlImage);
   }
 
   @override
