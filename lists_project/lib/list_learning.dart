@@ -1,3 +1,4 @@
+import 'package:extension_flutter_tools/extension_flutter_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:lists_project/ui/components/image_and_text.dart';
 
@@ -53,6 +54,7 @@ class _ListLearningState extends State<ListLearning> {
               style:
                   ElevatedButton.styleFrom(textStyle: TextStyle(fontSize: 20)),
               child: Text("Tout supprimer ! 😱")),
+          //ConfirmWrapper(childBuilder: childBuilder, onConfirm: onConfirm)
         ]),
       ),
     );
