@@ -21,7 +21,19 @@ class _ListLearningState extends State<ListLearning> {
 
   Widget _lineGenerator(BuildContext context, int lineNumber) {
     final urlImage = _listImagesUrl[lineNumber];
-    return ImageAndText(image: urlImage);
+    return ImageAndText(
+      image: urlImage,
+      title: "Bel endroit ! (${lineNumber + 1})",
+      onClick: () {
+        print("Clic sur l'endroit (${lineNumber + 1})");
+      },
+    );
+  }
+
+  void _suppressAll() {
+    setState(() {
+      _listImagesUrl.clear();
+    });
   }
 
   @override
@@ -30,8 +42,19 @@ class _ListLearningState extends State<ListLearning> {
       appBar: AppBar(
         title: Text("APPRENDS LES LISTES"),
       ),
-      body: ListView.builder(
-          itemCount: _listImagesUrl.length, itemBuilder: _lineGenerator),
+      body: SafeArea(
+        child: Column(children: [
+          Expanded(
+            child: ListView.builder(
+                itemCount: _listImagesUrl.length, itemBuilder: _lineGenerator),
+          ),
+          ElevatedButton(
+              onPressed: _suppressAll,
+              style:
+                  ElevatedButton.styleFrom(textStyle: TextStyle(fontSize: 20)),
+              child: Text("Tout supprimer ! 😱")),
+        ]),
+      ),
     );
   }
 }
