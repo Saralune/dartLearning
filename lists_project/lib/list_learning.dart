@@ -2,14 +2,26 @@ import 'package:extension_flutter_tools/extension_flutter_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:lists_project/ui/components/image_and_text.dart';
 
-class ListLearning extends StatefulWidget {
-  const ListLearning({super.key});
-
+class ListLearning extends StatelessWidget {
   @override
-  State<ListLearning> createState() => _ListLearningState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("APPRENDS LES LISTES"),
+      ),
+      body: SafeArea(child: ListLearningBody()),
+    );
+  }
 }
 
-class _ListLearningState extends State<ListLearning> {
+class ListLearningBody extends StatefulWidget {
+  const ListLearningBody({super.key});
+
+  @override
+  State<ListLearningBody> createState() => _ListLearningBodyState();
+}
+
+class _ListLearningBodyState extends State<ListLearningBody> {
   var _listImagesUrl = <String>[
     "https://images.unsplash.com/photo-1542480118439-cbba7870f6f7?q=80&w=1288&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://images.unsplash.com/photo-1587413394573-d11a3f406cee?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -37,33 +49,23 @@ class _ListLearningState extends State<ListLearning> {
     });
   }
 
-  void _childBuilder() {}
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("APPRENDS LES LISTES"),
+    return Column(children: [
+      Expanded(
+        child: ListView.builder(
+            itemCount: _listImagesUrl.length, itemBuilder: _lineGenerator),
       ),
-      body: SafeArea(
-        child: Column(children: [
-          Expanded(
-            child: ListView.builder(
-                itemCount: _listImagesUrl.length, itemBuilder: _lineGenerator),
-          ),
-          ConfirmWrapper(
-            childBuilder: (onTap) => ElevatedButton(
-                onPressed: onTap,
-                style: ElevatedButton.styleFrom(
-                    textStyle: TextStyle(fontSize: 20)),
-                child: Text("Tout supprimer ! 😱")),
-            onConfirm: _suppressAll,
-            confirmationNoText: "Non",
-            confirmationYesText: "Oui",
-            confirmationQuestionText: "Es-tu sûr de vouloir tout supprimer ?",
-          )
-        ]),
-      ),
-    );
+      ConfirmWrapper(
+        childBuilder: (onTap) => ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(textStyle: TextStyle(fontSize: 20)),
+            child: Text("Tout supprimer ! 😱")),
+        onConfirm: _suppressAll,
+        confirmationNoText: "Non",
+        confirmationYesText: "Oui",
+        confirmationQuestionText: "Es-tu sûr de vouloir tout supprimer ?",
+      )
+    ]);
   }
 }
