@@ -37,6 +37,8 @@ class _ListLearningState extends State<ListLearning> {
     });
   }
 
+  void _childBuilder() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,12 +51,17 @@ class _ListLearningState extends State<ListLearning> {
             child: ListView.builder(
                 itemCount: _listImagesUrl.length, itemBuilder: _lineGenerator),
           ),
-          ElevatedButton(
-              onPressed: _suppressAll,
-              style:
-                  ElevatedButton.styleFrom(textStyle: TextStyle(fontSize: 20)),
-              child: Text("Tout supprimer ! 😱")),
-          //ConfirmWrapper(childBuilder: childBuilder, onConfirm: onConfirm)
+          ConfirmWrapper(
+            childBuilder: (onTap) => ElevatedButton(
+                onPressed: onTap,
+                style: ElevatedButton.styleFrom(
+                    textStyle: TextStyle(fontSize: 20)),
+                child: Text("Tout supprimer ! 😱")),
+            onConfirm: _suppressAll,
+            confirmationNoText: "Non",
+            confirmationYesText: "Oui",
+            confirmationQuestionText: "Es-tu sûr de vouloir tout supprimer ?",
+          )
         ]),
       ),
     );
