@@ -17,7 +17,8 @@ class _SendEmailScreenState extends State<SendEmailScreen> {
         body: SafeArea(
       child: Column(children: [
         TextFormField(
-          key: const Key("email-field"),
+          key: const Key(
+              "email-field"), //permet d'être retrouvé facilement, notamment dans les tests
           decoration: const InputDecoration(
             icon: Icon(Icons.email),
             labelText: 'Votre adresse email',
